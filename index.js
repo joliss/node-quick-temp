@@ -21,10 +21,9 @@ function makeOrReuse(obj, prop) {
 
 exports.remove = remove
 function remove(obj, prop) {
-  if (obj[prop] == null) {
-    throw new Error('Expected "' + prop + '" on ' + obj + ' to contain path of temporary directory')
+  if (obj[prop] != null) {
+    rimraf.sync(obj[prop])
   }
-  rimraf.sync(obj[prop])
   obj[prop] = null
 }
 

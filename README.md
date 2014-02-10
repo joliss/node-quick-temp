@@ -41,4 +41,4 @@ quickTemp.remove(this, 'tmpDestDir')
 ```
 
 This will also assign `this.tmpDestDir = null`. If `this.tmpDestDir` is
-already null or undefined, it will throw an error.
+already null or undefined, it will be a no-op.
