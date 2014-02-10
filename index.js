@@ -2,6 +2,7 @@ var fs = require('fs')
 var path = require('path')
 var mktemp = require('mktemp')
 var rimraf = require('rimraf')
+var underscoreString = require('underscore.string')
 
 exports.makeOrRemake = makeOrRemake
 function makeOrRemake(obj, prop) {
@@ -28,9 +29,15 @@ function remove(obj, prop) {
 }
 
 
+function makeTmpDir(obj, prop) {
+  findBaseDir()
+  var tmpDirName = prettyTmpDirName(obj, prop)
+  return mktemp.createDirSync(path.join(baseDir, tmpDirName))
+}
+
 var baseDir
 
-function makeTmpDir(obj, prop) {
+function findBaseDir () {
   if (baseDir == null) {
     try {
       if (fs.statSync('tmp').isDirectory()) {
@@ -44,10 +51,17 @@ function makeTmpDir(obj, prop) {
       baseDir = 'tmp'
     }
   }
+}
 
-  // Will use obj.constructor.name and prop in the future to construct a
-  // "nice" name
-  var tmpDirName = 'XXXXXXXX.tmp'
+function prettyTmpDirName (obj, prop) {
+  function cleanString (s) {
+    return underscoreString.underscored(s || '')
+      .replace(/[^a-z_]/g, '')
+      .replace(/^_+/, '')
+  }
 
-  return mktemp.createDirSync(path.join(baseDir, tmpDirName))
+  var cleanObjectName = cleanString(obj.constructor && obj.constructor.name)
+  if (cleanObjectName) cleanObjectName += '-'
+  var cleanPropertyName = cleanString(prop)
+  return cleanObjectName + cleanPropertyName + '-XXXXXXXX.tmp'
 }

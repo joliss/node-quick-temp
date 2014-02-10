@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "rimraf": "~2.2.6",
-    "mktemp": "~0.3.4"
+    "mktemp": "~0.3.4",
+    "underscore.string": "~2.3.3"
   }
 }
