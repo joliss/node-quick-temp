@@ -1,55 +1,57 @@
-var fs = require('fs')
 var path = require('path')
-var mktemp = require('mktemp')
-var rimraf = require('rimraf')
 var underscoreString = require('underscore.string')
-
-exports.makeOrRemake = makeOrRemake
-function makeOrRemake(obj, prop) {
-  if (obj[prop] != null) {
-    remove(obj, prop)
-  }
-  return obj[prop] = makeTmpDir(obj, prop)
-}
+var RSVP = require('rsvp')
+var Promise = RSVP.Promise
+var rimraf = RSVP.denodeify(require('rimraf'))
+var mktemp = { createDir: RSVP.denodeify(require('mktemp').createDir) }
+var fs = { mkdir: RSVP.denodeify(require('fs').mkdir),
+           stat: RSVP.denodeify(require('fs').stat) }
 
 exports.makeOrReuse = makeOrReuse
 function makeOrReuse(obj, prop) {
-  if (obj[prop] != null) {
-    return obj[prop]
-  }
-  return obj[prop] = makeTmpDir(obj, prop)
+  return Promise.resolve(obj[prop] || makeTmpDir(obj, prop))
+         .then(function(path) { return obj[prop] = path })
+}
+
+exports.makeOrRemake = makeOrRemake
+function makeOrRemake(obj, prop) {
+  return remove(obj, prop)
+         .then(function() { return makeOrReuse(obj, prop) })
 }
 
 exports.remove = remove
 function remove(obj, prop) {
-  if (obj[prop] != null) {
-    rimraf.sync(obj[prop])
-  }
-  obj[prop] = null
+  return obj[prop] ?
+           rimraf(obj[prop]).then(function() { obj[prop] = null }) :
+           Promise.resolve()
 }
 
 
 function makeTmpDir(obj, prop) {
-  findBaseDir()
-  var tmpDirName = prettyTmpDirName(obj, prop)
-  return mktemp.createDirSync(path.join(baseDir, tmpDirName))
+  return createBaseDirIfNecessary()
+         .then(function() {
+            var tmpDirName = prettyTmpDirName(obj, prop)
+            return mktemp.createDir(path.join(baseDir, tmpDirName))
+         })
 }
 
 var baseDir
 
-function findBaseDir () {
-  if (baseDir == null) {
-    try {
-      if (fs.statSync('tmp').isDirectory()) {
-        baseDir = 'tmp'
-      }
-    } catch (err) {
-      if (err.code !== 'ENOENT') throw err
-      // We could try other directories, but for now we just create ./tmp if
-      // it doesn't exist
-      fs.mkdirSync('tmp')
-      baseDir = 'tmp'
-    }
+function createBaseDirIfNecessary () {
+  if (baseDir) {
+    return Promise.resolve()
+  } else {
+    return fs.stat('tmp')
+           .then(function(stat) {
+             if (stat.isDirectory()) { baseDir = 'tmp' }
+           })
+           .catch(function(err) {
+             if (err.code === 'ENOENT') {
+               // We could try other directories, but for now we just create ./tmp if
+               // it doesn't exist
+               return fs.mkdir('tmp').then(function() { baseDir = 'tmp' })
+             } else { throw err }
+           })
   }
 }
 

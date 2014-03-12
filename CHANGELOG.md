@@ -1,5 +1,7 @@
 # master
 
+* Use asynchronous file functions and return promises
+
 # 0.1.0
 
 * Bump version without change, to allow for caret/tilde dependencies
