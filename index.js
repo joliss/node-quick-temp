@@ -4,6 +4,8 @@ var mktemp = require('mktemp')
 var rimraf = require('rimraf')
 var underscoreString = require('underscore.string')
 
+var tmpDir = process.env.TMP_DIR || 'tmp'
+
 exports.makeOrRemake = makeOrRemake
 function makeOrRemake(obj, prop) {
   if (obj[prop] != null) {
@@ -40,15 +42,15 @@ var baseDir
 function findBaseDir () {
   if (baseDir == null) {
     try {
-      if (fs.statSync('tmp').isDirectory()) {
-        baseDir = 'tmp'
+      if (fs.statSync(tmpDir).isDirectory()) {
+        baseDir = tmpDir
       }
     } catch (err) {
       if (err.code !== 'ENOENT') throw err
       // We could try other directories, but for now we just create ./tmp if
       // it doesn't exist
-      fs.mkdirSync('tmp')
-      baseDir = 'tmp'
+      fs.mkdirSync(tmpDir)
+      baseDir = tmpDir
     }
   }
 }
