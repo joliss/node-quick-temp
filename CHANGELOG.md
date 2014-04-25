@@ -1,5 +1,7 @@
 # master
 
+* Use absolute path for temp directory.
+
 # 0.1.1
 
 * Do not put "object" into directory name
