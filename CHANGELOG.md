@@ -1,5 +1,7 @@
 # master
 
+# 0.1.2
+
 * Use absolute path for temp directory.
 
 # 0.1.1
