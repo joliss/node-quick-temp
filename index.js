@@ -53,13 +53,13 @@ function findBaseDir () {
   }
 }
 
-function prettyTmpDirName (obj, prop) {
-  function cleanString (s) {
-    return underscoreString.underscored(s || '')
-      .replace(/[^a-z_]/g, '')
-      .replace(/^_+/, '')
-  }
+function cleanString (s) {
+  return underscoreString.underscored(s || '')
+    .replace(/[^a-z_]/g, '')
+    .replace(/^_+/, '')
+}
 
+function prettyTmpDirName (obj, prop) {
   var cleanObjectName = cleanString(obj.constructor && obj.constructor.name)
   if (cleanObjectName === 'object') cleanObjectName = ''
   if (cleanObjectName) cleanObjectName += '-'
