@@ -13,7 +13,7 @@ npm install --save quick-temp
 ## Usage
 
 ```js
-var quickTemp = require('quick-temp')
+var quickTemp = require('quick-temp');
 ```
 
 ### Creating a temporary directory
@@ -22,9 +22,9 @@ To make a temporary and assign its path to `this.tmpDestDir`, call either one
 of these:
 
 ```js
-quickTemp.makeOrRemake(this, 'tmpDestDir')
+quickTemp.makeOrRemake(this, 'tmpDestDir');
 // or
-quickTemp.makeOrReuse(this, 'tmpDestDir')
+quickTemp.makeOrReuse(this, 'tmpDestDir');
 ```
 
 If `this.tmpDestDir` already contains a path, `makeOrRemake` will remove it
@@ -37,7 +37,7 @@ Both functions also return the path of the temporary directory.
 To remove a previously-created temporary directory and all its contents, call
 
 ```js
-quickTemp.remove(this, 'tmpDestDir')
+quickTemp.remove(this, 'tmpDestDir');
 ```
 
 This will also assign `this.tmpDestDir = null`. If `this.tmpDestDir` is
