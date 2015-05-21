@@ -60,8 +60,12 @@ function prettyTmpDirName (obj, prop) {
       .replace(/^_+/, '')
   }
 
-  var cleanObjectName = cleanString(obj.constructor && obj.constructor.name)
-  if (cleanObjectName === 'object') cleanObjectName = ''
+  var pluginName = obj.pluginName;
+  var cleanObjectName =
+      cleanString(typeof pluginName === 'string'
+          ? pluginName
+          : (obj.constructor && obj.constructor.name));
+  if (typeof cleanObjectName !== 'string') pluginName = '';
   if (cleanObjectName) cleanObjectName += '-'
   var cleanPropertyName = cleanString(prop)
   return cleanObjectName + cleanPropertyName + '-XXXXXXXX.tmp'
