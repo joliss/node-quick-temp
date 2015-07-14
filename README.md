@@ -32,6 +32,14 @@ first and then create a new directory, whereas `makeOrReuse` will be a no-op.
 
 Both functions also return the path of the temporary directory.
 
+An optional third argument lets you override the class-name component of the
+temporary directory name:
+
+```js
+quickTemp.makeOrRemake(this, 'tmpDestDir', 'TreeMerger');
+quickTemp.makeOrRemake(this, 'tmpDestDir', this.constructor.name); // default
+```
+
 ### Removing a temporary directory
 
 To remove a previously-created temporary directory and all its contents, call

@@ -1,5 +1,7 @@
 # master
 
+* Add optional `className` parameter
+
 # 0.1.2
 
 * Use absolute path for temp directory.
