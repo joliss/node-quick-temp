@@ -1,5 +1,7 @@
 # master
 
+# 0.1.3
+
 * Add optional `className` parameter
 
 # 0.1.2
