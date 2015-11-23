@@ -7,7 +7,8 @@ var underscoreString = require('underscore.string')
 exports.makeOrRemake = makeOrRemake
 function makeOrRemake(obj, prop, className) {
   if (obj[prop] != null) {
-    remove(obj, prop)
+    remake(obj, prop)
+    return obj[prop]
   }
   return obj[prop] = makeTmpDir(obj, prop, className)
 }
@@ -18,6 +19,15 @@ function makeOrReuse(obj, prop, className) {
     return obj[prop]
   }
   return obj[prop] = makeTmpDir(obj, prop, className)
+}
+
+exports.remake = remake
+function remake(obj, prop) {
+  var fullpath = obj[prop];
+  if (fullpath != null) {
+    rimraf.sync(fullpath);
+    fs.mkdirSync(fullpath);
+  }
 }
 
 exports.remove = remove
