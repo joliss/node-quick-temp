@@ -35,17 +35,22 @@ function makeTmpDir(obj, prop, className) {
   return mktemp.createDirSync(path.join(findBaseDir(), tmpDirName))
 }
 
+function currentTmp() {
+  return path.join(process.cwd(), 'tmp')
+}
+
 function findBaseDir () {
+  var tmp = currentTmp();
   try {
-    if (fs.statSync('tmp').isDirectory()) {
-      return fs.realpathSync('tmp')
+    if (fs.statSync(tmp).isDirectory()) {
+      return tmp;
     }
   } catch (err) {
     if (err.code !== 'ENOENT') throw err
     // We could try other directories, but for now we just create ./tmp if
     // it doesn't exist
-    fs.mkdirSync('tmp')
-    return fs.realpathSync('tmp')
+    fs.mkdirSync(tmp);
+    return tmp;
   }
 }
 
