@@ -1,5 +1,7 @@
 # master
 
+# 0.1.4
+
 * `makeOrRemake` now reuses its temporary directory, keeping the path the same
 
 # 0.1.3
