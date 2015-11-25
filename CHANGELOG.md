@@ -1,5 +1,7 @@
 # master
 
+* `makeOrRemake` now reuses its temporary directory, keeping the path the same
+
 # 0.1.3
 
 * Add optional `className` parameter
