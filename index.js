@@ -40,27 +40,27 @@ function remove(obj, prop) {
 
 
 function makeTmpDir(obj, prop, className) {
-  findBaseDir()
   if (className == null) className = obj.constructor && obj.constructor.name
   var tmpDirName = prettyTmpDirName(className, prop)
-  return mktemp.createDirSync(path.join(baseDir, tmpDirName))
+  return mktemp.createDirSync(path.join(findBaseDir(), tmpDirName))
 }
 
-var baseDir
+function currentTmp() {
+  return path.join(process.cwd(), 'tmp')
+}
 
 function findBaseDir () {
-  if (baseDir == null) {
-    try {
-      if (fs.statSync('tmp').isDirectory()) {
-        baseDir = fs.realpathSync('tmp')
-      }
-    } catch (err) {
-      if (err.code !== 'ENOENT') throw err
-      // We could try other directories, but for now we just create ./tmp if
-      // it doesn't exist
-      fs.mkdirSync('tmp')
-      baseDir = fs.realpathSync('tmp')
+  var tmp = currentTmp();
+  try {
+    if (fs.statSync(tmp).isDirectory()) {
+      return tmp;
     }
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err
+    // We could try other directories, but for now we just create ./tmp if
+    // it doesn't exist
+    fs.mkdirSync(tmp);
+    return tmp;
   }
 }
 
