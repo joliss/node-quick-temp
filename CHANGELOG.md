@@ -1,5 +1,7 @@
 # master
 
+* Update mktemp dependency
+
 # 0.1.5
 
 * Always ensure the `./tmp` dir exists
