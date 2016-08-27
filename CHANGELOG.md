@@ -1,5 +1,7 @@
 # master
 
+# 0.1.6
+
 * Update mktemp dependency
 
 # 0.1.5
