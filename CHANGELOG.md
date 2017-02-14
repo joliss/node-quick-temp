@@ -1,5 +1,7 @@
 # master
 
+* Update rimraf dependency
+
 # 0.1.6
 
 * Update mktemp dependency
