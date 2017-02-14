@@ -1,5 +1,7 @@
 # master
 
+# 0.1.8
+
 * Update underscore.string dependency
 
 # 0.1.7
