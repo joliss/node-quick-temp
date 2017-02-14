@@ -1,5 +1,7 @@
 # master
 
+# 0.1.7
+
 * Update rimraf dependency
 
 # 0.1.6
