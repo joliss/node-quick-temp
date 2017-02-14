@@ -1,5 +1,7 @@
 # master
 
+* Update underscore.string dependency
+
 # 0.1.7
 
 * Update rimraf dependency
