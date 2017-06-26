@@ -3,6 +3,7 @@ var path = require('path')
 var mktemp = require('mktemp')
 var rimraf = require('rimraf')
 var underscoreString = require('underscore.string')
+var os = require('os')
 
 exports.makeOrRemake = makeOrRemake
 function makeOrRemake(obj, prop, className) {
@@ -46,7 +47,11 @@ function makeTmpDir(obj, prop, className) {
 }
 
 function currentTmp() {
-  return path.join(process.cwd(), 'tmp')
+  if (process.env.QUICK_TEMP_TMP_DIR) {
+    return os.tmpdir()
+  } else {
+    return path.join(process.cwd(), 'tmp')
+  }
 }
 
 function findBaseDir () {
