@@ -10,9 +10,9 @@
     "url": "https://github.com/joliss/node-quick-temp"
   },
   "dependencies": {
-    "mktemp": "~0.4.0",
-    "rimraf": "^2.5.4",
-    "underscore.string": "~3.3.4"
+    "mktemp": "^2.0.1",
+    "rimraf": "^5.0.10",
+    "underscore.string": "~3.3.6"
   },
   "devDependencies": {
     "chai": "^5.2.0",
