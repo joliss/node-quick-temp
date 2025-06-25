@@ -13,5 +13,12 @@
     "mktemp": "~0.4.0",
     "rimraf": "^2.5.4",
     "underscore.string": "~3.3.4"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "mocha": "^11.7.1"
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }
