@@ -1,5 +1,7 @@
 # master
 
+# 0.1.10
+
 * Update dependencies
 
 # 0.1.9
