@@ -15,7 +15,7 @@
     "underscore.string": "~3.3.6"
   },
   "devDependencies": {
-    "chai": "^5.2.0",
+    "chai": "^6.2.1",
     "mocha": "^11.7.1"
   },
   "scripts": {
